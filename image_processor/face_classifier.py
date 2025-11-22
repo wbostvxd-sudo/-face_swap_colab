@@ -63,6 +63,7 @@ def get_model_options() -> ModelOptions:
 	return create_static_model_set('full').get('fairface')
 
 
+def pre_check() -> bool:
 	return True
 
 
