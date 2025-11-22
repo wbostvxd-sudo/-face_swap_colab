@@ -137,6 +137,7 @@ def collect_model_downloads() -> Tuple[DownloadSet, DownloadSet]:
 	return model_hash_set, model_source_set
 
 
+def pre_check() -> bool:
 	return True
 
 
