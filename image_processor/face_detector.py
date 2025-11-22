@@ -146,7 +146,9 @@ def collect_model_downloads() -> Tuple[DownloadSet, DownloadSet]:
 
 
 def pre_check() -> bool:
-	return True
+	model_hash_set, model_source_set = collect_model_downloads()
+
+	return conditional_download_hashes(model_hash_set) and conditional_download_sources(model_source_set)
 
 
 def detect_faces(vision_frame : VisionFrame) -> Tuple[List[BoundingBox], List[Score], List[FaceLandmark5]]:
@@ -417,16 +419,15 @@ def forward_with_scrfd(detect_vision_frame : VisionFrame) -> Detection:
 
 
 def forward_with_yolo_face(detect_vision_frame : VisionFrame) -> Detection:
-	try:
-		face_detector = get_inference_pool().get('yolo_face')
-		with thread_semaphore():
-			detection = face_detector.run(None,
-			{
-				'input': detect_vision_frame
-			})
-		return detection
-	except:
-		return numpy.zeros((1, 5, 10)) # Return dummy empty detection
+	face_detector = get_inference_pool().get('yolo_face')
+
+	with thread_semaphore():
+		detection = face_detector.run(None,
+		{
+			'input': detect_vision_frame
+		})
+
+	return detection
 
 
 def forward_with_yunet(detect_vision_frame : VisionFrame) -> Detection:

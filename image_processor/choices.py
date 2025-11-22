@@ -130,7 +130,7 @@ download_provider_set : DownloadProviderSet =\
 			'https://huggingface.co',
 			'https://hf-mirror.com'
 		],
-		'path': '/image_processor/{base_name}/resolve/main/{file_name}'
+		'path': '/facefusion/{base_name}/resolve/main/{file_name}'
 	}
 }
 download_providers : List[DownloadProvider] = list(download_provider_set.keys())

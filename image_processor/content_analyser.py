@@ -138,7 +138,9 @@ def collect_model_downloads() -> Tuple[DownloadSet, DownloadSet]:
 
 
 def pre_check() -> bool:
-	return True
+	model_hash_set, model_source_set = collect_model_downloads()
+
+	return conditional_download_hashes(model_hash_set) and conditional_download_sources(model_source_set)
 
 
 def analyse_stream(vision_frame : VisionFrame, video_fps : Fps) -> bool:
@@ -151,7 +153,7 @@ def analyse_stream(vision_frame : VisionFrame, video_fps : Fps) -> bool:
 
 
 def analyse_frame(vision_frame : VisionFrame) -> bool:
-	return False
+	return detect_nsfw(vision_frame)
 
 
 @lru_cache()
