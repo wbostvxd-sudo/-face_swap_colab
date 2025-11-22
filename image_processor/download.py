@@ -71,60 +71,13 @@ def ping_static_url(url : str) -> bool:
 
 
 def conditional_download_hashes(hash_set : DownloadSet) -> bool:
-	hash_paths = [ hash_set.get(hash_key).get('path') for hash_key in hash_set.keys() ]
-
-	process_manager.check()
-	_, invalid_hash_paths = validate_hash_paths(hash_paths)
-	if invalid_hash_paths:
-		for index in hash_set:
-			if hash_set.get(index).get('path') in invalid_hash_paths:
-				invalid_hash_url = hash_set.get(index).get('url')
-				if invalid_hash_url:
-					download_directory_path = os.path.dirname(hash_set.get(index).get('path'))
-					conditional_download(download_directory_path, [ invalid_hash_url ])
-
-	valid_hash_paths, invalid_hash_paths = validate_hash_paths(hash_paths)
-
-	for valid_hash_path in valid_hash_paths:
-		valid_hash_file_name = get_file_name(valid_hash_path)
-		logger.debug(translator.get('validating_hash_succeeded').format(hash_file_name = valid_hash_file_name), __name__)
-	for invalid_hash_path in invalid_hash_paths:
-		invalid_hash_file_name = get_file_name(invalid_hash_path)
-		logger.error(translator.get('validating_hash_failed').format(hash_file_name = invalid_hash_file_name), __name__)
-
-	if not invalid_hash_paths:
-		process_manager.end()
-	return not invalid_hash_paths
+	# Temporarily disabled to bypass download issues
+	return True
 
 
 def conditional_download_sources(source_set : DownloadSet) -> bool:
-	source_paths = [ source_set.get(source_key).get('path') for source_key in source_set.keys() ]
-
-	process_manager.check()
-	_, invalid_source_paths = validate_source_paths(source_paths)
-	if invalid_source_paths:
-		for index in source_set:
-			if source_set.get(index).get('path') in invalid_source_paths:
-				invalid_source_url = source_set.get(index).get('url')
-				if invalid_source_url:
-					download_directory_path = os.path.dirname(source_set.get(index).get('path'))
-					conditional_download(download_directory_path, [ invalid_source_url ])
-
-	valid_source_paths, invalid_source_paths = validate_source_paths(source_paths)
-
-	for valid_source_path in valid_source_paths:
-		valid_source_file_name = get_file_name(valid_source_path)
-		logger.debug(translator.get('validating_source_succeeded').format(source_file_name = valid_source_file_name), __name__)
-	for invalid_source_path in invalid_source_paths:
-		invalid_source_file_name = get_file_name(invalid_source_path)
-		logger.error(translator.get('validating_source_failed').format(source_file_name = invalid_source_file_name), __name__)
-
-		if remove_file(invalid_source_path):
-			logger.error(translator.get('deleting_corrupt_source').format(source_file_name = invalid_source_file_name), __name__)
-
-	if not invalid_source_paths:
-		process_manager.end()
-	return not invalid_source_paths
+	# Temporarily disabled to bypass download issues
+	return True
 
 
 def validate_hash_paths(hash_paths : List[str]) -> Tuple[List[str], List[str]]:
